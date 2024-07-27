@@ -7,7 +7,7 @@ This project is a web scraping application built with FastAPI. It scrapes produc
 The project has the following structure:
 
 ```plaintext
-dental-stall-scraper/
+scraper/
 ├── main.py # Entry point for the FastAPI application
 ├── cache.py # Cache management
 ├── models.py # Data models
@@ -32,8 +32,8 @@ dental-stall-scraper/
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/codeffe/dental-stall-scraper.git
-   cd dental-stall-scraper
+   git clone https://github.com/codeffe/scraper.git
+   cd scraper
    
 2. Create and activate a virtual environment:
 
