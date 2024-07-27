@@ -32,39 +32,86 @@ dental-stall-scraper/
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/dental-stall-scraper.git
+   git clone https://github.com/codeffe/dental-stall-scraper.git
    cd dental-stall-scraper
    
 2. Create and activate a virtual environment:
 
-```sh
-Copy code
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install the required packages:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   
+3. Install the required packages:
 
-sh
-Copy code
-pip install -r requirements.txt
-Create the necessary directories and files if they don't exist:
+   ``` sh
+   pip install -r requirements.txt
+   ```
+   
+4. Create the necessary directories and files if they don't exist:
 
-sh
-Copy code
-mkdir -p images
-touch scraped_data.json cache.json
-Running the Application
-Start the FastAPI server:
+   ```sh
+   mkdir -p images
+   touch scraped_data.json cache.json
+   Running the Application
+   ```
+5. Start the FastAPI server:
 
-sh
-Copy code
-uvicorn main:app --host 0.0.0.0 --port 8000
-Access the API:
+   ```sh
+   uvicorn main:app --host 0.0.0.0 --port 8000
+   ```
+   
+6. Access the API:
 
 The API will be available at http://localhost:8000.
 
+## API Endpoints
 
+The FastAPI application has the following endpoint:
 
-### requirements.txt
+      Endpoint: /scrape
+      Method: POST
+      Headers: token: xyz
 
-To ensure all dependencies are captured, you can create a `requirements.txt` file with the following content:
+      Request Body: 
+         {
+           "pages": 1,
+           "proxy": null
+         }
 
+      Response:
+         {
+           "scraped_products": [ ... ],
+           "message": "Scraped X products"
+         }
+
+### Authentication
+The application uses a static token for authentication. Ensure to include the header token: xyz in your requests.
+
+### How it Works
+
+Initialization: The Scraper class initializes with the number of pages to scrape, an optional proxy, and a cache instance.
+
+Scraping Process: The scrape method fetches the specified pages from the Dental Stall website.
+It parses product information including title, price, and image URL.
+Images are downloaded and saved to the images/ directory.
+
+Image Validation: Downloaded images are validated to ensure they are not corrupted.
+
+Caching: The cache is used to store product prices to avoid redundant data scraping.
+
+Saving Data: Scraped data is saved to scraped_data.json.
+Cache is updated and saved to cache.json.
+
+Notification: A message is logged indicating the number of products scraped and saved.
+
+### Example Request
+
+To scrape data from the Dental Stall website, you can use the following curl command:
+
+```sh
+curl -X POST "http://localhost:8000/scrape" -H "Content-Type: application/json" -H "token: xyz" -d '{"pages": 1, "proxy": null}'
+```
+This will initiate the scraping process for 1 page without using a proxy.
+
+### License
+This project is licensed under the MIT License.
